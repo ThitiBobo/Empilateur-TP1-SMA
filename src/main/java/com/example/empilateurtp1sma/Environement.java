@@ -9,5 +9,5 @@ public interface Environement {
 
     Agent pickAgent();
     
-    void awakeAgen(Agent agent);
+    void awakeAgent(Agent agent);
 }
