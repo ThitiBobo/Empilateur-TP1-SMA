@@ -2,7 +2,7 @@ package com.example.empilateurtp1sma;
 
 import org.springframework.cglib.core.Block;
 
-public class Bloc {
+public class Bloc extends Agent {
 
     private int id;
     private Block objectif;
