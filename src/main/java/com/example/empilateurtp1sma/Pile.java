@@ -4,10 +4,10 @@ import java.util.Stack;
 
 public class Pile {
 
-    private Stack stack;
+    private Stack<Agent> stack;
 
     public Pile(){
-        this.stack = new Stack<Agent>();
+        this.stack = new Stack<>();
     }
 
     public void add(Agent agent){
@@ -15,7 +15,7 @@ public class Pile {
     }
 
     public Agent pop(){
-        this.stack.pop();
+        return this.stack.pop();
     }
 
 }
