@@ -1,23 +1,41 @@
 package com.example.empilateurtp1sma;
 
-public class Block extends Agent {
+public class Block extends AgentBinary {
 
-    private int id;
-    private Block objectif;
+    private final int id;
+    private int objectifId;
+    private boolean waitingForBlockToMove = false;
 
     public Block(int id){
         this.id = id;
     }
+    public int getId(){
+        return id;
+    }
 
-    public void setObjectif(Block objectif){
-        this.objectif = objectif;
+    public boolean isWaitingForBlockToMove() {
+        return waitingForBlockToMove;
+    }
+
+    public void setObjectif(int objectif){
+        this.objectifId = objectif;
+    }
+
+    @Override
+    protected Object checkObjective(Observation observation) {
+        ObservationPile observationPile = (ObservationPile) observation;
+        return ((Block) observationPile.getAgentBeneath()).getId() == objectifId && !observationPile.isPushed();
     }
 
     public void move(){
-        return;
-    }
+        EnvironmentPile env = (EnvironmentPile) environment;
+        Stack stack = env.getRandomStack();
+        boolean move_done = env.moveTo(this, stack);
 
-    public void push(){
-        return;
+        if(!move_done){
+            env.agentPush(this);
+            waitingForBlockToMove = true;
+            enterSleepMode();
+        }
     }
 }
