@@ -3,7 +3,7 @@ package com.example.empilateurtp1sma;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface Environement {
+public interface Environment {
 
     @SuppressWarnings("rawtypes")
     List<Agent> agents = new ArrayList();
@@ -12,5 +12,5 @@ public interface Environement {
     
     void awakeAgent(Agent agent);
 
-    void initialiseEnvironement();
+    void initialiseEnvironment();
 }
