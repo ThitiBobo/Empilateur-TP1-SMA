@@ -17,6 +17,11 @@ public class Stack implements Resource{
 
     public Agent pop(Agent agent){
         return this.stack.pop();
+
+    }
+
+    public boolean contains(Agent agent){
+        return this.stack.contains(agent);
     }
 }
 
