@@ -2,46 +2,62 @@ package com.example.empilateurtp1sma;
 
 public class EnvironmentPile extends Environment {
 
-    protected Stack[] blockStacks;
-    protected AgentBlock[] blocs;
-    protected StackHandler stackHandler;
+    private StackHandler handler = new StackHandler();
 
-    @Override
-    protected void initialiseEnvironement() {
-        blockStacks = new Stack[]{
-                new Stack(),
-                new Stack(),
-                new Stack()
-        };
-        stackHandler = new StackHandler(blockStacks);
-
-        blocs = new AgentBlock[]{
-                new AgentBlock(1),
-                new AgentBlock(2),
-                new AgentBlock(3),
-                new AgentBlock(4)
-        };
-
-        // For each blocs, starting at SECOND, set objective to the previous one
-        // (the first will have no objective (thus it is bottom))
-        for(var i = 1; i < blocs.length; i++){
-            blocs[i].setObjectif(blocs[i-1].getId());
-        }
-
+    public StackHandler getHandler() {
+        return handler;
     }
 
     @Override
-    protected void startSimulation() {
-        for(var i = 1; i < blocs.length; i++){
-            // blocs[i].run(); // THREAD MODE
+    protected void addResource(Resource resource){
+        super.addResource(resource);
+        if (resource instanceof Stack){
+            handler.add((Stack)resource);
         }
     }
 
+    public AgentBlock findAgent(String agentString){
+        return (AgentBlock) this.agents.stream()
+                .filter(agent -> agent.getTag().equals(agentString))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Stack findRessource(String stackString){
+        return (Stack) this.ressources.stream()
+                .filter( s -> stackString.equals(s.getTag()))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void setAgent(String a, String s){
+        AgentBlock agent = findAgent(a);
+        Stack stack = findRessource(s);
+        stack.push(agent);
+    }
+
+    public void setObjectif(String sourceString, String targetString){
+        AgentBlock agent = findAgent(sourceString);
+        agent.setObjectif(targetString);
+    }
+
     @Override
-    protected void stopSimulation() {
-        for(var i = 1; i < blocs.length; i++){
-            // blocs[i].stop(); // THREAD MODE
-        }
+    protected void initialiseEnvironment() {
+    }
+
+    @Override
+    protected void start() {
+        this.agents.forEach(Thread::start);
+    }
+
+    @Override
+    protected void stop() {
+        this.agents.forEach(Thread::interrupt);
+    }
+
+
+    public String display(){
+        return handler.display();
     }
 
     @Override
@@ -62,5 +78,15 @@ public class EnvironmentPile extends Environment {
 
     protected void agentPush(Agent agent){
         ((AgentBlock) stackHandler.getAgentAbove(agent)).quitSleepMode();
+    }
+
+    // TODO
+    public AgentBlock getAgentBelow(AgentBlock agentBlock){
+        return null;
+    }
+
+    // TODO
+    public AgentBlock getAgentAbove(AgentBlock agentBlock){
+        return null;
     }
 }

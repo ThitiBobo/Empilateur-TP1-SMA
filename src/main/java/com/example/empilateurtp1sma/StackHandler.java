@@ -2,41 +2,58 @@ package com.example.empilateurtp1sma;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class StackHandler {
 
     private List<Stack> stacks = new ArrayList<>();
+    private ReentrantLock mutex = new ReentrantLock();
+    private Random rand = new Random();
 
-    public StackHandler(Stack[] blockStacks) {
-        for(var i = 0; i < blockStacks.length; i++){
-            stacks.add(blockStacks[i]);
-        }
+    public void add(Stack stack){
+        stacks.add(stack);
     }
 
-
-    public boolean move(Agent agent, Stack destination){
-
-        // cherche l'agent
-        // vérifie si l'agent est en haut de sa pile
-        // essaye de bloquer sa pile
-        // essaye de bloquer la pile cible
-
-        // retourne vrai si le déplacement a pu se faire
-        return true;  // TODO
+    public Stack acquireStack(Agent agent){
+        mutex.lock();
+        Stack stack = find(agent);
+        Stack res = null;
+        do {
+             res = getRandomStack();
+        }while(res == stack);
+        return res;
     }
+
+    public void releaseStack(Agent agent){
+        mutex.unlock();
+    }
+
 
     public Stack find(Agent agent){
-        return null;  // TODO
+        Stack container = null;
+        for(Stack stack : stacks)
+            if (stack.contains(agent)) {
+                container = stack;
+            }
+        return container;
     }
 
-    public Stack getRandomStack(){
-        return null;  // TODO
+    private Stack getRandomStack(){
+        return stacks.get(rand.nextInt(stacks.size()));
     }
 
-    public Object getAgentAbove(Agent agent) {
-        return null; // TODO
+    @Override
+    public String toString() {
+        return "StackHandler{" +
+                "stacks=" + stacks +
+                '}';
     }
-    public Object getAgentBeneath(Agent agent) {
-        return null; // TODO
+
+    public String display(){
+        StringBuilder builder = new StringBuilder();
+        this.stacks.forEach( stack -> builder.append(stack.display()).append("\n"));
+        return builder.toString();
     }
 }
