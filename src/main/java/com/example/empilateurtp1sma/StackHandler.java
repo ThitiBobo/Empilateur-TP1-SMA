@@ -8,27 +8,30 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class StackHandler {
 
-    private static List<Stack> stacks = new ArrayList<>();
-    private static ReentrantLock mutex = new ReentrantLock();
-    private static Random rand = new Random();
+    private List<Stack> stacks = new ArrayList<>();
+    private ReentrantLock mutex = new ReentrantLock();
+    private Random rand = new Random();
 
+    public void add(Stack stack){
+        stacks.add(stack);
+    }
 
-    public static Stack acquireStack(Agent agent){
+    public Stack acquireStack(Agent agent){
         mutex.lock();
-        Stack stack = StackHandler.find(agent);
+        Stack stack = find(agent);
         AtomicReference<Stack> res = null;
         do {
-             res.set(StackHandler.getRandomStack());
+             res.set(getRandomStack());
         }while(res.get() == stack);
         return res.get();
     }
 
-    public static void releaseStack(Agent agent){
+    public void releaseStack(Agent agent){
         mutex.unlock();
     }
 
 
-    public static Stack find(Agent agent){
+    public Stack find(Agent agent){
         Stack container = null;
         for(Stack stack : stacks)
             if (stack.contains(agent)) {
@@ -37,8 +40,20 @@ public class StackHandler {
         return container;
     }
 
-    private static Stack getRandomStack(){
+    private Stack getRandomStack(){
         return stacks.get(rand.nextInt(stacks.size()));
     }
 
+    @Override
+    public String toString() {
+        return "StackHandler{" +
+                "stacks=" + stacks +
+                '}';
+    }
+
+    public String display(){
+        StringBuilder builder = new StringBuilder();
+        this.stacks.forEach( stack -> builder.append(stack.display()).append("\n"));
+        return builder.toString();
+    }
 }
