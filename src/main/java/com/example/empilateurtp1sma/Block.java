@@ -24,7 +24,7 @@ public class Block extends AgentBinary {
     @Override
     protected Object checkObjective(Observation observation) {
         ObservationPile observationPile = (ObservationPile) observation;
-        return ((Block) observationPile.getAgentBeneath()).getId() == objectifId && !observationPile.isPushed();
+        return observationPile.getAgentBeneathId() == objectifId && !observationPile.isPushed();
     }
 
     public void move(){

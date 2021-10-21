@@ -5,21 +5,38 @@ import java.util.List;
 
 public class StackHandler {
 
-    private static List<Stack> stacks = new ArrayList<>();
+    private List<Stack> stacks = new ArrayList<>();
+
+    public StackHandler(Stack[] blockStacks) {
+        for(var i = 0; i < blockStacks.length; i++){
+            stacks.add(blockStacks[i]);
+        }
+    }
 
 
-    public static void move(Agent agent){
+    public boolean move(Agent agent, Stack destination){
 
         // cherche l'agent
         // vérifie si l'agent est en haut de sa pile
-        // essaye de bloqué sa pile
-        // essaye de bloqué la pile cible
+        // essaye de bloquer sa pile
+        // essaye de bloquer la pile cible
 
-
+        // retourne vrai si le déplacement a pu se faire
+        return true;  // TODO
     }
 
-    public static Stack find(Agent agent){
-        return null;
+    public Stack find(Agent agent){
+        return null;  // TODO
     }
 
+    public Stack getRandomStack(){
+        return null;  // TODO
+    }
+
+    public Object getAgentAbove(Agent agent) {
+        return null; // TODO
+    }
+    public Object getAgentBeneath(Agent agent) {
+        return null; // TODO
+    }
 }
