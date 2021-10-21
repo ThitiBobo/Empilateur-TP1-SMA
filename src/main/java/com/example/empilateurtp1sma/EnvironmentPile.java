@@ -1,32 +1,64 @@
 package com.example.empilateurtp1sma;
 
-public class EnvironmentPile implements Environment {
+public class EnvironmentPile extends Environment {
 
-    protected Stack[] blockStacks = {new Stack(), new Stack(), new Stack()};
+    private StackHandler handler = new StackHandler();
 
     @Override
-    public Agent pickAgent() {
+    protected void addResource(Resource resource){
+        super.addResource(resource);
+        if (resource instanceof Stack){
+            handler.add((Stack)resource);
+        }
+    }
+
+    @Override
+    protected void initialiseEnvironment() {
+    }
+
+    @Override
+    protected void start() {
+        this.agents.forEach(Thread::start);
+    }
+
+    @Override
+    protected void stop() {
+        this.agents.forEach(Thread::interrupt);
+    }
+
+    @Override
+    public Observation observe(Agent agent) {
         return null;
     }
 
-    @Override
-    public void awakeAgent(Agent agent) {
-
+    public void setAgent(String a, String s){
+        AgentBlock agent = findAgent(a);
+        Stack stack = findRessource(s);
+        stack.push(agent);
     }
 
-    @Override
-    public void initialiseEnvironment() {
-        Block[] blocs = {
-            new Block(1),
-            new Block(2),
-            new Block(3),
-            new Block(4)
-        };
+    public void setObjectif(String sourceString, String targetString){
+        AgentBlock agent = findAgent(sourceString);
+        AgentBlock target = findAgent(targetString);
+        agent.setObjectif(target);
+    }
 
-        // For each blocs, starting at SECOND, set objective to the previous one
-        // (the first will have no objective (thus it is bottom))
-        for(var i = 1; i < blocs.length; i++){
-            blocs[i].setObjectif(blocs[i-1]);
-        }
+    public AgentBlock findAgent(String agentString){
+
+        return (AgentBlock) this.agents.stream()
+                .filter(agent -> agent.getTag().equals(agentString))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Stack findRessource(String stackString){
+        return (Stack) this.ressources.stream()
+                .filter( s -> stackString.equals(s.getTag()))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public String display(){
+        return handler.display();
     }
 }

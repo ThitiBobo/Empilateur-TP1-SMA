@@ -9,16 +9,33 @@ import java.util.Objects;
 
 public abstract class Environment implements PropertyChangeListener {
 
-    @SuppressWarnings("rawtypes")
-    protected List<Agent> agents = new ArrayList();
-    protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<Agent, Boolean>();
+    protected List<Agent> agents = new ArrayList<>();
+    protected List<Resource> ressources = new ArrayList<>();
+    protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
 
-    protected void wireAgent(Agent agent){
+
+
+    protected void addAgent(Agent agent){
         agents.add(agent);
         agentIsSatisfied.put(agent, false);
-        agent.setEnvironement(this);
+        agent.setEnvironment(this);
     }
 
+    protected void addResource(Resource resource){
+        ressources.add(resource);
+    }
+
+    abstract protected void initialiseEnvironment();
+    abstract protected void start();
+    abstract protected void stop();
+    abstract public Observation observe(Agent agent);
+
+    protected void checkEndCondition(){
+        for (Boolean bool : agentIsSatisfied.values()) {
+            if(!bool) return; //If at least one is not yet satisfied, we pursue the simulation
+        }
+        stop();
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -28,18 +45,4 @@ public abstract class Environment implements PropertyChangeListener {
                 checkEndCondition();
         }
     }
-
-    abstract protected void initialiseEnvironement();
-    abstract protected void startSimulation();
-    abstract protected void stopSimulation();
-    abstract public Observation observe(Agent agent);
-
-    protected void checkEndCondition(){
-        for (Boolean bool : agentIsSatisfied.values()) {
-            if(!bool) return; //If at least one is not yet satisfied, we pursue the simulation
-        }
-
-        stopSimulation();
-    }
-
 }
