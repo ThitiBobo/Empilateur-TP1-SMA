@@ -19,11 +19,11 @@ public class StackHandler {
     public Stack acquireStack(Agent agent){
         mutex.lock();
         Stack stack = find(agent);
-        AtomicReference<Stack> res = null;
+        Stack res = null;
         do {
-             res.set(getRandomStack());
-        }while(res.get() == stack);
-        return res.get();
+             res = getRandomStack();
+        }while(res == stack);
+        return res;
     }
 
     public void releaseStack(Agent agent){

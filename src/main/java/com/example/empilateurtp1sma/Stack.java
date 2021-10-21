@@ -20,8 +20,10 @@ public class Stack extends Resource{
         this.stack.push(agent);
     }
 
-    public Agent pop(Agent agent){
-        return this.stack.pop();
+    public void pop(Agent agent) throws Exception {
+        if (this.stack.peek() != agent)
+            throw new Exception("The moving agent is not at the top of the stack");
+        this.stack.pop();
 
     }
 

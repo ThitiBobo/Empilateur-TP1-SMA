@@ -26,7 +26,6 @@ public class Main {
         env.setObjectif("B", "A");
         env.setObjectif("A", null);
 
-
         System.out.println(env.display());
 
         env.start();
@@ -36,6 +35,8 @@ public class Main {
             e.printStackTrace();
         }
         env.stop();
+
+        System.out.println(env.display());
     }
 
 }

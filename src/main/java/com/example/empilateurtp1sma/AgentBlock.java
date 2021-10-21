@@ -3,8 +3,6 @@ package com.example.empilateurtp1sma;
 public class AgentBlock extends Agent {
 
     private AgentBlock objectif;
-    private AgentBlock agentBelow;
-    private AgentBlock agentAbove;
     private boolean waitingForBlockToMove = false;
 
     public AgentBlock(String tag){
@@ -20,15 +18,23 @@ public class AgentBlock extends Agent {
     }
 
     public void move(){
-//        EnvironmentPile env = (EnvironmentPile) environment;
-//        Stack stack = env.getRandomStack();
-//        boolean move_done = env.moveTo(this, stack);
-//
-//        if(!move_done){
-//            env.agentPush(this);
-//            waitingForBlockToMove = true;
-//            enterSleepMode();
-//        }
+
+        StackHandler handler = ((EnvironmentPile) environment).getHandler();
+
+        Stack origin = handler.find(this);
+        Stack target = handler.acquireStack(this);
+
+        try {
+            origin.pop(this);
+            target.push(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        handler.releaseStack(this);
+    }
+
+    public void push(AgentBlock agent){
+
     }
 
 
@@ -39,13 +45,19 @@ public class AgentBlock extends Agent {
 
     @Override
     protected void execute() throws InterruptedException {
-        //Thread.sleep(0);
-        //TODO pas compris la classe Observation
-        if (Thread.interrupted()) {
-            throw new InterruptedException();
+        // TODO à améliorer
+        if (this.checkObjective()) {
+            // écoute
+        } else{
+            AgentBlock agentAbove = ((EnvironmentPile) this.environment).getAgentAbove(this);
+            if (agentAbove == null) {
+                move();
+                // envoie un signal
+            } else {
+                push(agentAbove);
+                // attends le signal pour bouger à nouveau
+            }
         }
-
-        this.checkObjective();
     }
 
     @Override
@@ -54,7 +66,7 @@ public class AgentBlock extends Agent {
     }
 
     private boolean checkObjective(){
-        return false;
+        return ((EnvironmentPile) this.environment).getAgentBelow(this) == this.objectif;
     }
 
     @Override

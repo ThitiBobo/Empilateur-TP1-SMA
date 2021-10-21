@@ -13,8 +13,6 @@ public abstract class Environment implements PropertyChangeListener {
     protected List<Resource> ressources = new ArrayList<>();
     protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
 
-
-
     protected void addAgent(Agent agent){
         agents.add(agent);
         agentIsSatisfied.put(agent, false);
@@ -30,11 +28,8 @@ public abstract class Environment implements PropertyChangeListener {
     abstract protected void stop();
     abstract public Observation observe(Agent agent);
 
-    protected void checkEndCondition(){
-        for (Boolean bool : agentIsSatisfied.values()) {
-            if(!bool) return; //If at least one is not yet satisfied, we pursue the simulation
-        }
-        stop();
+    protected boolean checkEndCondition(){
+        return !this.agentIsSatisfied.containsValue(false);
     }
 
     @Override

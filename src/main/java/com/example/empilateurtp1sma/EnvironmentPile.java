@@ -4,6 +4,10 @@ public class EnvironmentPile extends Environment {
 
     private StackHandler handler = new StackHandler();
 
+    public StackHandler getHandler() {
+        return handler;
+    }
+
     @Override
     protected void addResource(Resource resource){
         super.addResource(resource);
@@ -60,5 +64,15 @@ public class EnvironmentPile extends Environment {
 
     public String display(){
         return handler.display();
+    }
+
+    // TODO
+    public AgentBlock getAgentBelow(AgentBlock agentBlock){
+        return null;
+    }
+
+    // TODO
+    public AgentBlock getAgentAbove(AgentBlock agentBlock){
+        return null;
     }
 }
