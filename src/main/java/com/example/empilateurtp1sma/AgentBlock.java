@@ -1,12 +1,12 @@
 package com.example.empilateurtp1sma;
 
-public class Block extends AgentBinary {
+public class AgentBlock extends AgentBinary {
 
     private final int id;
     private int objectifId;
     private boolean waitingForBlockToMove = false;
 
-    public Block(int id){
+    public AgentBlock(int id){
         this.id = id;
     }
     public int getId(){

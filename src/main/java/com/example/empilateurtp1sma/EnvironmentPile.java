@@ -3,7 +3,7 @@ package com.example.empilateurtp1sma;
 public class EnvironmentPile extends Environment {
 
     protected Stack[] blockStacks;
-    protected Block[] blocs;
+    protected AgentBlock[] blocs;
     protected StackHandler stackHandler;
 
     @Override
@@ -15,11 +15,11 @@ public class EnvironmentPile extends Environment {
         };
         stackHandler = new StackHandler(blockStacks);
 
-        blocs = new Block[]{
-                new Block(1),
-                new Block(2),
-                new Block(3),
-                new Block(4)
+        blocs = new AgentBlock[]{
+                new AgentBlock(1),
+                new AgentBlock(2),
+                new AgentBlock(3),
+                new AgentBlock(4)
         };
 
         // For each blocs, starting at SECOND, set objective to the previous one
@@ -46,7 +46,7 @@ public class EnvironmentPile extends Environment {
 
     @Override
     public Observation observe(Agent agent) {
-        Block agentBeneath = (Block) stackHandler.getAgentBeneath(agent);
+        AgentBlock agentBeneath = (AgentBlock) stackHandler.getAgentBeneath(agent);
         ObservationPile observation = new ObservationPile(agentBeneath.getId());
         observation.setPushed(agentBeneath.isWaitingForBlockToMove());
         return observation;
@@ -61,6 +61,6 @@ public class EnvironmentPile extends Environment {
     }
 
     protected void agentPush(Agent agent){
-        ((Block) stackHandler.getAgentAbove(agent)).quitSleepMode();
+        ((AgentBlock) stackHandler.getAgentAbove(agent)).quitSleepMode();
     }
 }
