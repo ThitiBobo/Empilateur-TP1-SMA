@@ -6,13 +6,19 @@ package com.example.empilateurtp1sma;
 
 public abstract class AgentBinary extends Agent{
 
+    public AgentBinary(String tag) {
+        super(tag);
+    }
+
     public void run(){
         Observation observation = environment.observe(this);
         if(updateSatisfaction((boolean) checkObjective(observation))) {
             enterSleepMode();
         }
         else {
-            move();
+            // TODO problème de logique d'implémentation, la classe agent à une méthode
+            // move, pourtant tous les agents ne réalise pas des actions move()
+            // move();
         }
     }
 }
