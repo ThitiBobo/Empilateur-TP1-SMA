@@ -1,5 +1,6 @@
 package com.example.empilateurtp1sma.base;
 
+import com.example.empilateurtp1sma.Report;
 import com.example.empilateurtp1sma.base.Agent;
 import com.example.empilateurtp1sma.base.Resource;
 
@@ -15,6 +16,12 @@ public abstract class Environment implements PropertyChangeListener {
     protected List<Agent> agents = new ArrayList<>();
     protected List<Resource> ressources = new ArrayList<>();
     protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
+
+    protected Report report = new Report();
+
+    public Report getReport(){
+        return report;
+    }
 
     public void addAgent(Agent agent){
         agents.add(agent);

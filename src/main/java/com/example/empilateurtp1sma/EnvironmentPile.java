@@ -53,12 +53,14 @@ public class EnvironmentPile extends Environment {
 
     @Override
     public void start() {
+        this.report.addState(display());
         this.agents.forEach(Thread::start);
     }
 
     @Override
     public void stop() {
         this.agents.forEach(Thread::interrupt);
+        this.report.addState(display());
     }
 
     public void setAgent(String a, String s){

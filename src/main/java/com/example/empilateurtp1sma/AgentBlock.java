@@ -36,7 +36,11 @@ public class AgentBlock extends Agent {
         try {
             origin.pop(this);
             target.push(this);
-            //System.out.println(((EnvironmentPile) this.environment).display());
+            this.environment.getReport().addState(((EnvironmentPile) this.environment).display());
+            this.environment.getReport().addAction(
+                    "MOVE",
+                    tag + ": " + origin.getTag() + " > " + target.getTag());
+            this.environment.getReport().increment();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,6 +72,7 @@ public class AgentBlock extends Agent {
                 // envoie un signal
             } else {
                 agentAbove.push();
+                this.environment.getReport().addAction("PUSH", tag + " push " + agentAbove.tag);
                 // attends le signal pour bouger à nouveau
             }
         }
