@@ -21,10 +21,10 @@ public class Main {
         env.setAgent("C", "1");
         env.setAgent("D", "1");
 
-        env.setObjectif("A", "B");
-        env.setObjectif("B", "C");
-        env.setObjectif("C", "D");
-        env.setObjectif("D", null);
+        env.setObjectif("D", "A");
+        env.setObjectif("A", "C");
+        env.setObjectif("C", "B");
+        env.setObjectif("B", null);
 
         System.out.println(env.display());
 

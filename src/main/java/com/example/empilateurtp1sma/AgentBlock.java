@@ -2,20 +2,20 @@ package com.example.empilateurtp1sma;
 
 public class AgentBlock extends AgentBinary {
 
-    private final int id;
-    private int objectifId;
-    private boolean waitingForBlockToMove = false;
+    private AgentBlock objectif;
+    private boolean pushed = false;
     private StackHandler handler;
 
-    public AgentBlock(int id){
-        this.id = id;
+    public AgentBlock(String tag){
+        super(tag);
+        this.pushed = false;
     }
     public int getId(){
         return id;
     }
 
-    public boolean isWaitingForBlockToMove() {
-        return waitingForBlockToMove;
+    public boolean isPushed() {
+        return pushed;
     }
 
     public void setObjectif(int objectif){
@@ -26,7 +26,7 @@ public class AgentBlock extends AgentBinary {
         this.handler = handler;
     }
 
-    public void move() throws InterruptedException {
+    private void move() throws InterruptedException {
 
         Stack origin = handler.find(this);
         Stack target = handler.acquireStack(this);
@@ -41,8 +41,8 @@ public class AgentBlock extends AgentBinary {
         handler.releaseStack(this);
     }
 
-    public void push(AgentBlock agent){
-
+    private void push(){
+        this.pushed = true;
     }
 
 
@@ -65,7 +65,7 @@ public class AgentBlock extends AgentBinary {
                 move();
                 // envoie un signal
             } else {
-                push(agentAbove);
+                agentAbove.push();
                 // attends le signal pour bouger à nouveau
             }
         }
@@ -77,6 +77,10 @@ public class AgentBlock extends AgentBinary {
     }
 
     private boolean checkObjective(){
+        if (isPushed()){
+            this.pushed = false;
+            return false;
+        }
         return this.handler.getAgentBelow(this) == this.objectif;
     }
 }
