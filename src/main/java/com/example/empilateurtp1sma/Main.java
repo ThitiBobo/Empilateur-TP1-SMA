@@ -38,6 +38,7 @@ public class Main {
 
 
         System.out.println("");
+        System.out.println("Objectif achieved: " + env.checkEndCondition());
         System.out.println("number of movement: " + env.getReport().getCount());
         System.out.println(env.display());
         System.out.println("see more info in " + fileName);

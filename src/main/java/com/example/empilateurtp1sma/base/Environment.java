@@ -23,6 +23,14 @@ public abstract class Environment implements PropertyChangeListener {
         return report;
     }
 
+    public void setAgentSatisfied(Agent agent){
+        this.agentIsSatisfied.put(agent, true);
+    }
+
+    public void setAgentUnsatisfied(Agent agent){
+        this.agentIsSatisfied.put(agent, false);
+    }
+
     public void addAgent(Agent agent){
         agents.add(agent);
         agentIsSatisfied.put(agent, false);
@@ -36,7 +44,7 @@ public abstract class Environment implements PropertyChangeListener {
     abstract public void start();
     abstract public void stop();
 
-    protected boolean checkEndCondition(){
+    public boolean checkEndCondition(){
         return !this.agentIsSatisfied.containsValue(false);
     }
 
