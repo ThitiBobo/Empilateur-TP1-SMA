@@ -31,6 +31,26 @@ public class Stack extends Resource{
         return this.stack.contains(agent);
     }
 
+    public Agent getAgentBelow(Agent agent) throws Exception {
+        if (!contains(agent)) throw new Exception("the Agent is not in the Stack");
+        int index = stack.indexOf(agent);
+        try{
+            return stack.elementAt(index - 1);
+        }catch (IndexOutOfBoundsException e){
+            return null;
+        }
+    }
+
+    public Agent getAgentAbove(Agent agent) throws Exception {
+        if (!contains(agent)) throw new Exception("the Agent is not in the Stack");
+        int index = stack.indexOf(agent);
+        try{
+            return stack.elementAt(index + 1);
+        }catch (IndexOutOfBoundsException e){
+            return null;
+        }
+    }
+
     @Override
     public String toString() {
         return "Stack{" +

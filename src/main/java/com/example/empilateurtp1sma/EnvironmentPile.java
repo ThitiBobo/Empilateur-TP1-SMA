@@ -9,7 +9,13 @@ public class EnvironmentPile extends Environment {
     }
 
     @Override
-    protected void addResource(Resource resource){
+    public void addAgent(Agent agent){
+        super.addAgent(agent);
+        ((AgentBlock) agent).setStackHandler(handler);
+    }
+
+    @Override
+    public void addResource(Resource resource){
         super.addResource(resource);
         if (resource instanceof Stack){
             handler.add((Stack)resource);
@@ -42,22 +48,23 @@ public class EnvironmentPile extends Environment {
     }
 
     @Override
-    protected void initialiseEnvironment() {
+    public void initialiseEnvironment() {
     }
 
     @Override
-    protected void start() {
+    public void start() {
         this.agents.forEach(Thread::start);
     }
 
     @Override
-    protected void stop() {
+    public void stop() {
         this.agents.forEach(Thread::interrupt);
     }
 
-
-    public String display(){
-        return handler.display();
+    public void setAgent(String a, String s){
+        AgentBlock agent = findAgent(a);
+        Stack stack = findRessource(s);
+        stack.push(agent);
     }
 
     @Override
@@ -78,15 +85,5 @@ public class EnvironmentPile extends Environment {
 
     protected void agentPush(Agent agent){
         ((AgentBlock) stackHandler.getAgentAbove(agent)).quitSleepMode();
-    }
-
-    // TODO
-    public AgentBlock getAgentBelow(AgentBlock agentBlock){
-        return null;
-    }
-
-    // TODO
-    public AgentBlock getAgentAbove(AgentBlock agentBlock){
-        return null;
     }
 }

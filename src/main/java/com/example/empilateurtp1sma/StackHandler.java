@@ -16,21 +16,6 @@ public class StackHandler {
         stacks.add(stack);
     }
 
-    public Stack acquireStack(Agent agent){
-        mutex.lock();
-        Stack stack = find(agent);
-        Stack res = null;
-        do {
-             res = getRandomStack();
-        }while(res == stack);
-        return res;
-    }
-
-    public void releaseStack(Agent agent){
-        mutex.unlock();
-    }
-
-
     public Stack find(Agent agent){
         Stack container = null;
         for(Stack stack : stacks)
@@ -40,8 +25,47 @@ public class StackHandler {
         return container;
     }
 
+    public Stack acquireStack(Agent agent) throws InterruptedException {
+
+
+        mutex.lockInterruptibly();
+
+        Stack stack = find(agent);
+        Stack res = null;
+        do {
+             res = getRandomStack();
+        }while(res == stack);
+        return res;
+    }
+
+    public void releaseStack(Agent agent) throws InterruptedException {
+        mutex.unlock();
+        Thread.sleep(10);
+        // System.out.println(mutex.getHoldCount());
+    }
+
     private Stack getRandomStack(){
         return stacks.get(rand.nextInt(stacks.size()));
+    }
+
+    public AgentBlock getAgentBelow(AgentBlock agentBlock){
+        Stack stack = find(agentBlock);
+        try {
+            return (AgentBlock) stack.getAgentBelow(agentBlock);
+        } catch (Exception e) {
+            //TODO à améliorer
+            return null;
+        }
+    }
+
+    public AgentBlock getAgentAbove(AgentBlock agentBlock) {
+        Stack stack = find(agentBlock);
+        try {
+            return (AgentBlock) stack.getAgentAbove(agentBlock);
+        } catch (Exception e) {
+            //TODO à améliorer
+            return null;
+        }
     }
 
     @Override

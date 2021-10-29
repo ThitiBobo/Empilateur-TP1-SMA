@@ -13,20 +13,19 @@ public abstract class Environment implements PropertyChangeListener {
     protected List<Resource> ressources = new ArrayList<>();
     protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
 
-    protected void addAgent(Agent agent){
+    public void addAgent(Agent agent){
         agents.add(agent);
         agentIsSatisfied.put(agent, false);
         agent.setEnvironment(this);
     }
 
-    protected void addResource(Resource resource){
+    public void addResource(Resource resource){
         ressources.add(resource);
     }
 
-    abstract protected void initialiseEnvironment();
-    abstract protected void start();
-    abstract protected void stop();
-    abstract public Observation observe(Agent agent);
+    abstract public void initialiseEnvironment();
+    abstract public void start();
+    abstract public void stop();
 
     protected boolean checkEndCondition(){
         return !this.agentIsSatisfied.containsValue(false);
