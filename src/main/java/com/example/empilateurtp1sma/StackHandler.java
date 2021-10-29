@@ -1,9 +1,10 @@
 package com.example.empilateurtp1sma;
 
+import com.example.empilateurtp1sma.base.Agent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class StackHandler {

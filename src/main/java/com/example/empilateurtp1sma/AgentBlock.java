@@ -1,6 +1,8 @@
 package com.example.empilateurtp1sma;
 
-public class AgentBlock extends AgentBinary {
+import com.example.empilateurtp1sma.base.Agent;
+
+public class AgentBlock extends Agent {
 
     private AgentBlock objectif;
     private boolean pushed = false;

@@ -1,9 +1,12 @@
 package com.example.empilateurtp1sma;
 
+import com.example.empilateurtp1sma.base.Agent;
+import com.example.empilateurtp1sma.base.Resource;
+
 /**
  * Represents a stack that can contain Agents
  */
-public class Stack extends Resource{
+public class Stack extends Resource {
 
     /**
      * Agent stack

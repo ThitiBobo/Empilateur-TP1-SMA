@@ -1,4 +1,4 @@
-package com.example.empilateurtp1sma;
+package com.example.empilateurtp1sma.base;
 
 import java.util.concurrent.Semaphore;
 

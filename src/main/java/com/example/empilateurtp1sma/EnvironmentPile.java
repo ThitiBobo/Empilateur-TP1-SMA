@@ -1,5 +1,9 @@
 package com.example.empilateurtp1sma;
 
+import com.example.empilateurtp1sma.base.Agent;
+import com.example.empilateurtp1sma.base.Environment;
+import com.example.empilateurtp1sma.base.Resource;
+
 public class EnvironmentPile extends Environment {
 
     private StackHandler handler = new StackHandler();
@@ -48,10 +52,6 @@ public class EnvironmentPile extends Environment {
     }
 
     @Override
-    public void initialiseEnvironment() {
-    }
-
-    @Override
     public void start() {
         this.agents.forEach(Thread::start);
     }
@@ -75,8 +75,11 @@ public class EnvironmentPile extends Environment {
         return observation;
     }
 
-    protected Stack getRandomStack(){
-        return stackHandler.getRandomStack();
+    public AgentBlock findAgent(String agentString){
+        return (AgentBlock) this.agents.stream()
+                .filter(agent -> agent.getTag().equals(agentString))
+                .findFirst()
+                .orElse(null);
     }
 
     protected boolean moveTo(Agent agent, Stack destination){

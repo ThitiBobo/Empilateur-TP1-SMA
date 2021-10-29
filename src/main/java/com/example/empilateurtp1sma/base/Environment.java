@@ -1,4 +1,7 @@
-package com.example.empilateurtp1sma;
+package com.example.empilateurtp1sma.base;
+
+import com.example.empilateurtp1sma.base.Agent;
+import com.example.empilateurtp1sma.base.Resource;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -23,7 +26,6 @@ public abstract class Environment implements PropertyChangeListener {
         ressources.add(resource);
     }
 
-    abstract public void initialiseEnvironment();
     abstract public void start();
     abstract public void stop();
 
