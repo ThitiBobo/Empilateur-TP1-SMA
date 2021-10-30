@@ -1,19 +1,18 @@
 package com.example.empilateurtp1sma;
 
-import com.example.empilateurtp1sma.agents.AgentBlock;
+import com.example.empilateurtp1sma.agents.AgentBlock2;
 import com.example.empilateurtp1sma.environment.EnvironmentPile;
 import com.example.empilateurtp1sma.environment.Stack;
 
-public class Main {
-
+public class Main3 {
     public static void main(String[] args) {
 
         EnvironmentPile env = new EnvironmentPile();
 
-        env.addAgent(new AgentBlock("A"));
-        env.addAgent(new AgentBlock("B"));
-        env.addAgent(new AgentBlock("C"));
-        env.addAgent(new AgentBlock("D"));
+        env.addAgent(new AgentBlock2("A"));
+        env.addAgent(new AgentBlock2("B"));
+        env.addAgent(new AgentBlock2("C"));
+        env.addAgent(new AgentBlock2("D"));
 
         env.addResource(new Stack("1"));
         env.addResource(new Stack("2"));
@@ -47,5 +46,4 @@ public class Main {
         System.out.println(env.display());
         System.out.println("see more info in " + fileName);
     }
-
 }

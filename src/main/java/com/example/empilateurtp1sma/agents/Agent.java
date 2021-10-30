@@ -1,4 +1,6 @@
-package com.example.empilateurtp1sma.base;
+package com.example.empilateurtp1sma.agents;
+
+import com.example.empilateurtp1sma.environment.Environment;
 
 import java.beans.PropertyChangeSupport;
 

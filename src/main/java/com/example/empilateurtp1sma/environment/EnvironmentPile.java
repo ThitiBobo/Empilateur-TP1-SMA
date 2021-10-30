@@ -1,8 +1,7 @@
-package com.example.empilateurtp1sma;
+package com.example.empilateurtp1sma.environment;
 
-import com.example.empilateurtp1sma.base.Agent;
-import com.example.empilateurtp1sma.base.Environment;
-import com.example.empilateurtp1sma.base.Resource;
+import com.example.empilateurtp1sma.agents.AgentBlock;
+import com.example.empilateurtp1sma.agents.Agent;
 
 public class EnvironmentPile extends Environment {
 

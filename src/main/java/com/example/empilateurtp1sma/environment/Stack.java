@@ -1,7 +1,9 @@
-package com.example.empilateurtp1sma;
+package com.example.empilateurtp1sma.environment;
 
-import com.example.empilateurtp1sma.base.Agent;
-import com.example.empilateurtp1sma.base.Resource;
+import com.example.empilateurtp1sma.agents.Agent;
+import com.example.empilateurtp1sma.environment.Resource;
+
+import java.util.EmptyStackException;
 
 /**
  * Represents a stack that can contain Agents
@@ -36,6 +38,18 @@ public class Stack extends Resource {
             throw new Exception("The moving agent is not at the top of the stack");
         this.stack.pop();
 
+    }
+
+    /**
+     * Looks at the Agent at the top of this stack without removing it from the stack.
+     * @return the Agent at the top of this stack
+     */
+    public Agent peek(){
+        try{
+            return this.stack.peek();
+        }catch (EmptyStackException e){
+            return null;
+        }
     }
 
     /**

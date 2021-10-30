@@ -1,12 +1,14 @@
-package com.example.empilateurtp1sma;
+package com.example.empilateurtp1sma.agents;
 
-import com.example.empilateurtp1sma.base.Agent;
+import com.example.empilateurtp1sma.environment.EnvironmentPile;
+import com.example.empilateurtp1sma.environment.Stack;
+import com.example.empilateurtp1sma.environment.StackHandler;
 
 public class AgentBlock extends Agent {
 
-    private AgentBlock objectif;
-    private boolean pushed = false;
-    private StackHandler handler;
+    protected AgentBlock objectif;
+    protected boolean pushed = false;
+    protected StackHandler handler;
 
     public AgentBlock(String tag){
         super(tag);
@@ -28,7 +30,7 @@ public class AgentBlock extends Agent {
         this.handler = handler;
     }
 
-    private void move() throws InterruptedException {
+    protected void move() throws InterruptedException {
 
         Stack origin = handler.find(this);
         Stack target = handler.acquireStack(this);
@@ -47,7 +49,7 @@ public class AgentBlock extends Agent {
         handler.releaseStack(this);
     }
 
-    private void push(){
+    protected void push(){
         this.pushed = true;
         this.environment.setAgentUnsatisfied(this);
     }
@@ -63,18 +65,15 @@ public class AgentBlock extends Agent {
 
         StackHandler handler = ((EnvironmentPile) environment).getHandler();
 
-        // TODO à améliorer
         if (this.checkObjective()) {
             this.environment.setAgentSatisfied(this);
         } else{
             AgentBlock agentAbove = this.handler.getAgentAbove(this);
             if (agentAbove == null) {
                 move();
-                // envoie un signal
             } else {
                 agentAbove.push();
                 this.environment.getReport().addAction("PUSH", tag + " push " + agentAbove.tag);
-                // attends le signal pour bouger à nouveau
             }
         }
     }
@@ -84,7 +83,7 @@ public class AgentBlock extends Agent {
         System.out.println("BOT:" + tag + " stopped");
     }
 
-    private boolean checkObjective(){
+    protected boolean checkObjective(){
         if (isPushed()){
             this.pushed = false;
             return false;

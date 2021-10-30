@@ -1,4 +1,4 @@
-package com.example.empilateurtp1sma;
+package com.example.empilateurtp1sma.environment;
 
 import java.io.BufferedWriter;
 import java.io.File;

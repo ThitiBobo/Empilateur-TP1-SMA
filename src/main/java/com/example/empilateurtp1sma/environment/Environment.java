@@ -1,8 +1,6 @@
-package com.example.empilateurtp1sma.base;
+package com.example.empilateurtp1sma.environment;
 
-import com.example.empilateurtp1sma.Report;
-import com.example.empilateurtp1sma.base.Agent;
-import com.example.empilateurtp1sma.base.Resource;
+import com.example.empilateurtp1sma.agents.Agent;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
