@@ -4,8 +4,11 @@ import com.example.empilateurtp1sma.agents.AgentBlock1;
 import com.example.empilateurtp1sma.environment.EnvironmentPile;
 import com.example.empilateurtp1sma.environment.Stack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main2 {
-    public static void main(String[] args) {
+    public static int run() {
 
         EnvironmentPile env = new EnvironmentPile();
 
@@ -45,5 +48,19 @@ public class Main2 {
         System.out.println("number of movement: " + env.getReport().getCount());
         System.out.println(env.display());
         System.out.println("see more info in " + fileName);
+
+        return  env.getReport().getCount();
+    }
+
+    public static void main(String[] args) {
+
+        List<Integer> res = new ArrayList<>();
+        for (int i = 0; i < 100; i++){
+            System.out.println("RUN: " + i);
+            res.add(run());
+        }
+
+        res.forEach(r -> System.out.println(r));
+
     }
 }

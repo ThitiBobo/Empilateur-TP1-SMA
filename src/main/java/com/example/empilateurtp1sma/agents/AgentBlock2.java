@@ -2,6 +2,7 @@ package com.example.empilateurtp1sma.agents;
 
 import com.example.empilateurtp1sma.environment.EnvironmentPile;
 import com.example.empilateurtp1sma.environment.Stack;
+import com.example.empilateurtp1sma.environment.StackHandler;
 
 public class AgentBlock2 extends AgentBlock{
 
@@ -27,7 +28,7 @@ public class AgentBlock2 extends AgentBlock{
             System.out.println("mouvement utile");
         }
 
-        if (pushed || usefulMovement){
+        if (pushed || usefulMovement || handler.getAgentBelow(this) == null){
             try {
                 origin.pop(this);
                 target.push(this);
@@ -42,6 +43,30 @@ public class AgentBlock2 extends AgentBlock{
             }
         }
         handler.releaseStack(this);
+    }
+
+    @Override
+    protected void execute() throws InterruptedException {
+
+        StackHandler handler = ((EnvironmentPile) environment).getHandler();
+
+        if (this.checkObjective()) {
+            AgentBlock agent = handler.getAgentAbove(this);
+            if (agent != null){
+                if (!agent.checkObjective())
+                    agent.push();
+            }
+
+            this.environment.setAgentSatisfied(this);
+        } else{
+            AgentBlock agentAbove = this.handler.getAgentAbove(this);
+            if (agentAbove == null) {
+                move();
+            } else {
+                agentAbove.push();
+                this.environment.getReport().addAction("PUSH", tag + " push " + agentAbove.tag);
+            }
+        }
     }
 
     /**
