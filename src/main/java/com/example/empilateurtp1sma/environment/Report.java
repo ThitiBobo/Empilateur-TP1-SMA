@@ -1,5 +1,7 @@
 package com.example.empilateurtp1sma.environment;
 
+import com.example.empilateurtp1sma.agents.Agent;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -18,11 +20,14 @@ public class Report {
     private Map<String, List<String>> actionList;
     private Map<String, String> infos;
 
+    protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
+
     public Report(){
         this.count = 0;
         this.states = new ArrayList<>();
         this.actionList = new HashMap<>();
         this.infos = new HashMap<>();
+        this.agentIsSatisfied = new HashMap<>();
     }
 
     public void increment(){
@@ -41,6 +46,10 @@ public class Report {
         this.states.add(state);
     }
 
+    public void setAgentIsSatisfied(HashMap map){
+        this.agentIsSatisfied = map;
+    }
+
     public void addAction(String type, String action){
         if (!this.actionList.containsKey(type)){
             this.actionList.put(type, new ArrayList<>());
@@ -56,10 +65,19 @@ public class Report {
         }
     }
 
+    public boolean checkEndCondition(){
+        return !this.agentIsSatisfied.containsValue(false);
+    }
+
     public String export(){
         Timestamp timestamp = new Timestamp(new Date().getTime());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String fileName = "report-" + sdf.format(timestamp) + ".md";
+
+        File directory = new File(folderPath);
+        if (! directory.exists()){
+            directory.mkdir();
+        }
 
         try {
             File file = new File(folderPath + "/" + fileName);
