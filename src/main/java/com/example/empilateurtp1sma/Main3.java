@@ -1,6 +1,6 @@
 package com.example.empilateurtp1sma;
 
-import com.example.empilateurtp1sma.agents.AgentBlock;
+import com.example.empilateurtp1sma.agents.AgentBlock2;
 import com.example.empilateurtp1sma.environment.EnvironmentPile;
 import com.example.empilateurtp1sma.environment.Report;
 import com.example.empilateurtp1sma.environment.Stack;
@@ -8,15 +8,15 @@ import com.example.empilateurtp1sma.environment.Stack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class Main3 {
+    public static Report run() {
 
-    public static Report run(){
         EnvironmentPile env = new EnvironmentPile();
 
-        env.addAgent(new AgentBlock("A"));
-        env.addAgent(new AgentBlock("B"));
-        env.addAgent(new AgentBlock("C"));
-        env.addAgent(new AgentBlock("D"));
+        env.addAgent(new AgentBlock2("A"));
+        env.addAgent(new AgentBlock2("B"));
+        env.addAgent(new AgentBlock2("C"));
+        env.addAgent(new AgentBlock2("D"));
 
         env.addResource(new Stack("1"));
         env.addResource(new Stack("2"));
@@ -49,5 +49,4 @@ public class Main {
         System.out.println("Objectif atteint      : " + report.checkEndCondition());
         System.out.println("Nombre de déplacement : " + report.getCount());
     }
-
 }

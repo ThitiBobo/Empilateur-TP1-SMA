@@ -1,6 +1,4 @@
-package com.example.empilateurtp1sma;
-
-import java.util.concurrent.Semaphore;
+package com.example.empilateurtp1sma.environment;
 
 public abstract class Resource {
 

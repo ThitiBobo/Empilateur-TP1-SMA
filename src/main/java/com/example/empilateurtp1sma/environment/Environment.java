@@ -1,4 +1,6 @@
-package com.example.empilateurtp1sma;
+package com.example.empilateurtp1sma.environment;
+
+import com.example.empilateurtp1sma.agents.Agent;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -13,22 +15,41 @@ public abstract class Environment implements PropertyChangeListener {
     protected List<Resource> ressources = new ArrayList<>();
     protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
 
-    protected void addAgent(Agent agent){
+    public HashMap getAgentIsSatisfied() {
+        return this.agentIsSatisfied;
+    }
+
+    protected Report report = new Report();
+
+    public Report getReport(){
+        return report;
+    }
+
+    synchronized public void setAgentSatisfied(Agent agent){
+        this.agentIsSatisfied.put(agent, true);
+        if (checkEndCondition()){
+            notify();
+        }
+    }
+
+    public void setAgentUnsatisfied(Agent agent){
+        this.agentIsSatisfied.put(agent, false);
+    }
+
+    public void addAgent(Agent agent){
         agents.add(agent);
         agentIsSatisfied.put(agent, false);
         agent.setEnvironment(this);
     }
 
-    protected void addResource(Resource resource){
+    public void addResource(Resource resource){
         ressources.add(resource);
     }
 
-    abstract protected void initialiseEnvironment();
-    abstract protected void start();
-    abstract protected void stop();
-    abstract public Observation observe(Agent agent);
+    abstract public void start(long timeoutMillis);
+    abstract public void stop();
 
-    protected boolean checkEndCondition(){
+    public boolean checkEndCondition(){
         return !this.agentIsSatisfied.containsValue(false);
     }
 
