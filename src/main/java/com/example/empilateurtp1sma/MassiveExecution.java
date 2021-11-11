@@ -20,7 +20,7 @@ public class MassiveExecution {
     /**
      * Le nombre de scénarios à exécuter
      */
-    public static final int nbScenario = 179;
+    public static final int nbScenario = 100;
     /**
      * Le type de scénario à exécuter, par défaut exécute le scénario de base :
      *  - 1 : scénario de base

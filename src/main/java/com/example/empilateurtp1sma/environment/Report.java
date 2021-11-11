@@ -75,7 +75,10 @@ public class Report {
         if (!this.actionList.containsKey(type)){
             this.actionList.put(type, new ArrayList<>());
         }
-        this.actionList.get(type).add(action);
+
+        try{
+            this.actionList.get(type).add(action);
+        }catch (IndexOutOfBoundsException e){}
     }
 
     public void addInfo(String infoName, String info){

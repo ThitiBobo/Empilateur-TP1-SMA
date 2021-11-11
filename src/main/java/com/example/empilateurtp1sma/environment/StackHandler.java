@@ -55,7 +55,6 @@ public class StackHandler {
         try {
             return (AgentBlock) stack.getAgentBelow(agentBlock);
         } catch (Exception e) {
-            //TODO à améliorer
             return null;
         }
     }
@@ -65,7 +64,6 @@ public class StackHandler {
         try {
             return (AgentBlock) stack.getAgentAbove(agentBlock);
         } catch (Exception e) {
-            //TODO à améliorer
             return null;
         }
     }
