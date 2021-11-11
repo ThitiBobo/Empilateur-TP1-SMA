@@ -6,7 +6,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,6 +19,9 @@ public class Report {
     private Map<String, List<String>> actionList;
     private Map<String, String> infos;
 
+    private String initialState;
+    private String finalState;
+
     protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
 
     public Report(){
@@ -28,6 +30,9 @@ public class Report {
         this.actionList = new HashMap<>();
         this.infos = new HashMap<>();
         this.agentIsSatisfied = new HashMap<>();
+
+        this.initialState = null;
+        this.finalState = null;
     }
 
     public void increment(){
@@ -48,6 +53,22 @@ public class Report {
 
     public void setAgentIsSatisfied(HashMap map){
         this.agentIsSatisfied = map;
+    }
+
+    public String getInitialState(){
+        return this.initialState;
+    }
+
+    public void setInitialState(String state){
+        this.initialState = state;
+    }
+
+    public String getFinalState(){
+        return this.finalState;
+    }
+
+    public void setFinalState(String state){
+        this.finalState = state;
     }
 
     public void addAction(String type, String action){

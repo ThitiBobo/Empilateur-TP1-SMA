@@ -36,17 +36,17 @@ public class Main3 {
         env.stop();
         String fileName = env.getReport().export();
 
-
-//        System.out.println("");
-//        System.out.println("Objectif achieved: " + env.checkEndCondition());
-//        System.out.println("number of movement: " + env.getReport().getCount());
-//        System.out.println(env.display());
-//        System.out.println("see more info in " + fileName);
-//        env.getReport().setAgentIsSatisfied(env.getAgentIsSatisfied());
+        env.getReport().setAgentIsSatisfied(env.getAgentIsSatisfied());
         return env.getReport();
     }
 
     public static void main(String[] args) {
-        run();
+        Report report = run();
+
+        System.out.println(report.getInitialState());
+        System.out.println(report.getFinalState());
+
+        System.out.println("Objectif atteint      : " + report.checkEndCondition());
+        System.out.println("Nombre de déplacement : " + report.getCount());
     }
 }

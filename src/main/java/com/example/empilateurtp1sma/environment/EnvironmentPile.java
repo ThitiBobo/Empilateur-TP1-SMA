@@ -54,6 +54,7 @@ public class EnvironmentPile extends Environment {
 
     @Override
     synchronized public void start(long timeoutMillis) {
+        this.report.setInitialState(display());
         this.report.addState(display());
         this.agents.forEach(Thread::start);
         try {
@@ -68,6 +69,7 @@ public class EnvironmentPile extends Environment {
     public void stop() {
         this.agents.forEach(Thread::interrupt);
         this.report.addState(display());
+        this.report.setFinalState(display());
     }
 
     public void setAgent(String a, String s){

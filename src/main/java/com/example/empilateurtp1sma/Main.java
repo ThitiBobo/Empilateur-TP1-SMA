@@ -22,31 +22,32 @@ public class Main {
         env.addResource(new Stack("2"));
         env.addResource(new Stack("3"));
 
-        env.setAgent("A", "1");
         env.setAgent("B", "1");
-        env.setAgent("C", "1");
         env.setAgent("D", "1");
+        env.setAgent("A", "1");
+        env.setAgent("C", "1");
 
-        env.setObjectif("D", "A");
-        env.setObjectif("A", "C");
+        env.setObjectif("D", "C");
         env.setObjectif("C", "B");
-        env.setObjectif("B", null);
+        env.setObjectif("B", "A");
+        env.setObjectif("A", null);
 
         env.start(2000);
         env.stop();
         String fileName = env.getReport().export();
 
-//        System.out.println("");
-//        System.out.println("Objectif achieved: " + env.checkEndCondition());
-//        System.out.println("number of movement: " + env.getReport().getCount());
-//        System.out.println(env.display());
-//        System.out.println("see more info in " + fileName);
         env.getReport().setAgentIsSatisfied(env.getAgentIsSatisfied());
         return env.getReport();
     }
 
     public static void main(String[] args) {
-        run();
+        Report report = run();
+
+        System.out.println(report.getInitialState());
+        System.out.println(report.getFinalState());
+
+        System.out.println("Objectif atteint      : " + report.checkEndCondition());
+        System.out.println("Nombre de déplacement : " + report.getCount());
     }
 
 }
