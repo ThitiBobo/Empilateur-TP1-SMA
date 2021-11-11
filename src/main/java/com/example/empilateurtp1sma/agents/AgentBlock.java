@@ -44,7 +44,7 @@ public class AgentBlock extends Agent {
                     tag + ": " + origin.getTag() + " > " + target.getTag());
             this.environment.getReport().increment();
         } catch (Exception e) {
-            System.out.println("BOT:" + tag + " had a problem to move");
+            //System.out.println("BOT:" + tag + " had a problem to move");
         }
         handler.releaseStack(this);
     }
@@ -57,7 +57,7 @@ public class AgentBlock extends Agent {
 
     @Override
     protected void init() {
-        System.out.println("BOT:" + tag + " started");
+        //System.out.println("BOT:" + tag + " started");
     }
 
     @Override
@@ -80,7 +80,7 @@ public class AgentBlock extends Agent {
 
     @Override
     protected void terminate() {
-        System.out.println("BOT:" + tag + " stopped");
+        //System.out.println("BOT:" + tag + " stopped");
     }
 
     protected boolean checkObjective(){

@@ -3,6 +3,8 @@ package com.example.empilateurtp1sma.environment;
 import com.example.empilateurtp1sma.agents.AgentBlock;
 import com.example.empilateurtp1sma.agents.Agent;
 
+import java.util.HashMap;
+
 public class EnvironmentPile extends Environment {
 
     private StackHandler handler = new StackHandler();
@@ -51,9 +53,15 @@ public class EnvironmentPile extends Environment {
     }
 
     @Override
-    public void start() {
+    synchronized public void start(long timeoutMillis) {
         this.report.addState(display());
         this.agents.forEach(Thread::start);
+        try {
+            wait(timeoutMillis);
+            stop();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

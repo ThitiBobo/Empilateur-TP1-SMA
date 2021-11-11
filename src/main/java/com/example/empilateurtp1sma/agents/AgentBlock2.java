@@ -24,10 +24,6 @@ public class AgentBlock2 extends AgentBlock{
             usefulMovement = this.objectif == a && a.checkObjective();
         }
 
-        if (usefulMovement){
-            System.out.println("mouvement utile");
-        }
-
         if (pushed || usefulMovement || handler.getAgentBelow(this) == null){
             try {
                 origin.pop(this);
@@ -39,7 +35,7 @@ public class AgentBlock2 extends AgentBlock{
                         tag + ": " + origin.getTag() + " > " + target.getTag());
                 this.environment.getReport().increment();
             } catch (Exception e) {
-                System.out.println("BOT:" + tag + " had a problem to move");
+                //System.out.println("BOT:" + tag + " had a problem to move");
             }
         }
         handler.releaseStack(this);

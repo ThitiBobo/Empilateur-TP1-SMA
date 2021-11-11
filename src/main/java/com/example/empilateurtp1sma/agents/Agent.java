@@ -29,8 +29,6 @@ public abstract class Agent extends Thread{
         while (!isInterrupted()){
             try{
                 execute();
-
-                //System.out.println("running");
             }catch (InterruptedException e){
                 Thread.currentThread().interrupt();
             }

@@ -15,14 +15,21 @@ public abstract class Environment implements PropertyChangeListener {
     protected List<Resource> ressources = new ArrayList<>();
     protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
 
+    public HashMap getAgentIsSatisfied() {
+        return this.agentIsSatisfied;
+    }
+
     protected Report report = new Report();
 
     public Report getReport(){
         return report;
     }
 
-    public void setAgentSatisfied(Agent agent){
+    synchronized public void setAgentSatisfied(Agent agent){
         this.agentIsSatisfied.put(agent, true);
+        if (checkEndCondition()){
+            notify();
+        }
     }
 
     public void setAgentUnsatisfied(Agent agent){
@@ -39,7 +46,7 @@ public abstract class Environment implements PropertyChangeListener {
         ressources.add(resource);
     }
 
-    abstract public void start();
+    abstract public void start(long timeoutMillis);
     abstract public void stop();
 
     public boolean checkEndCondition(){
