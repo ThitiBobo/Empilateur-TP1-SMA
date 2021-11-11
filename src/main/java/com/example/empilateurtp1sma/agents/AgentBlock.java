@@ -14,16 +14,13 @@ public class AgentBlock extends Agent {
         super(tag);
         this.pushed = false;
     }
-    public int getId(){
-        return id;
-    }
 
     public boolean isPushed() {
         return pushed;
     }
 
-    public void setObjectif(int objectif){
-        this.objectifId = objectif;
+    public void setObjectif(AgentBlock objectif){
+        this.objectif = objectif;
     }
 
     public void setStackHandler(StackHandler handler){

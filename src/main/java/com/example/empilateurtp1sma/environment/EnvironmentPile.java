@@ -27,31 +27,6 @@ public class EnvironmentPile extends Environment {
         }
     }
 
-    public AgentBlock findAgent(String agentString){
-        return (AgentBlock) this.agents.stream()
-                .filter(agent -> agent.getTag().equals(agentString))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public Stack findRessource(String stackString){
-        return (Stack) this.ressources.stream()
-                .filter( s -> stackString.equals(s.getTag()))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public void setAgent(String a, String s){
-        AgentBlock agent = findAgent(a);
-        Stack stack = findRessource(s);
-        stack.push(agent);
-    }
-
-    public void setObjectif(String sourceString, String targetString){
-        AgentBlock agent = findAgent(sourceString);
-        agent.setObjectif(targetString);
-    }
-
     @Override
     synchronized public void start(long timeoutMillis) {
         this.report.setInitialState(display());
@@ -78,12 +53,10 @@ public class EnvironmentPile extends Environment {
         stack.push(agent);
     }
 
-    @Override
-    public Observation observe(Agent agent) {
-        AgentBlock agentBeneath = (AgentBlock) stackHandler.getAgentBeneath(agent);
-        ObservationPile observation = new ObservationPile(agentBeneath.getId());
-        observation.setPushed(agentBeneath.isWaitingForBlockToMove());
-        return observation;
+    public void setObjectif(String sourceString, String targetString){
+        AgentBlock agent = findAgent(sourceString);
+        AgentBlock target = findAgent(targetString);
+        agent.setObjectif(target);
     }
 
     public AgentBlock findAgent(String agentString){
@@ -93,11 +66,14 @@ public class EnvironmentPile extends Environment {
                 .orElse(null);
     }
 
-    protected boolean moveTo(Agent agent, Stack destination){
-        return stackHandler.move(agent, destination);
+    public Stack findRessource(String stackString){
+        return (Stack) this.ressources.stream()
+                .filter( s -> stackString.equals(s.getTag()))
+                .findFirst()
+                .orElse(null);
     }
 
-    protected void agentPush(Agent agent){
-        ((AgentBlock) stackHandler.getAgentAbove(agent)).quitSleepMode();
+    public String display(){
+        return handler.display();
     }
 }

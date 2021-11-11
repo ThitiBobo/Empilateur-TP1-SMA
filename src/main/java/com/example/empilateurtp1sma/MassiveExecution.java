@@ -27,7 +27,7 @@ public class MassiveExecution {
      *  - 2 : amélioration numéro 1
      *  - 3 : amélioration numéro 2
      */
-    public static final int scenario = 1;
+    public static final int scenario = 3;
 
 
     public static void main(String[] args) {
