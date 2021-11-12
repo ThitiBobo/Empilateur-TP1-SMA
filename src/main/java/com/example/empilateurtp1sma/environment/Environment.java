@@ -14,12 +14,12 @@ public abstract class Environment implements PropertyChangeListener {
     protected List<Agent> agents = new ArrayList<>();
     protected List<Resource> ressources = new ArrayList<>();
     protected HashMap<Agent, Boolean> agentIsSatisfied = new HashMap<>();
+    protected Report report = new Report();
 
     public HashMap getAgentIsSatisfied() {
         return this.agentIsSatisfied;
     }
 
-    protected Report report = new Report();
 
     public Report getReport(){
         return report;
