@@ -46,7 +46,9 @@ Après plusieurs exécutions, vous pouvez **supprimer le dossier reports** pour 
 
 ## Présentation du code
 
+Pour le problème d'empilement de bloques ordonnés, nous somme partis sur l'implémentation suivante :
 
+![Untitled.vpd](img/Untitled.vpd-16367486299211.svg)
 
 ## Analyse des résultats
 
@@ -75,6 +77,8 @@ Nous pouvons, maintenant, améliorer le comportement de nos agents et proposer d
 ### Stratégie 1
 
 Cette première stratégie consiste à améliorer la fonction d'évaluation de l'objectif de nos agents, au lieu de vérifier  si l'agent est sur le bloque voulus, l'agent va vérifier en plus, si tous les agents en dessous de lui ont atteint leur objectif pour considérer son objectif satisfait.
+
+Cette stratégie va nous permettre de voir si le simple fait d'améliorer la fonction d'évaluation de nos agents va améliorer l'organisation globale ou si nous devons rajouter d'autre comportement en plus.
 
 <img src="img/tableau-2.svg" alt="tableau-2" style="zoom:110%;" />
 
