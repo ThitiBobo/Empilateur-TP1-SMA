@@ -2,6 +2,48 @@
 
 Baptiste Magous -Thibaut Delplanque 
 
+## Exécution du code
+
+La structure du projet se présente de la manière suivante :
+
+```basic
+Empilateur-TP1-SMA/
+├─ doc/
+│  └─ reports/
+├─ img/
+└─ src/
+   └─ main/
+     └─ java/
+        └─ com.example.empilateurtp1sma/
+           ├─ agents/
+           ├─ environment/
+           ├─ Main.java
+           ├─ Main2.java
+           ├─ Main3.java
+           └─ MassiveExecution.java
+```
+
+La classe `Main` permet d'exécuter le scénario du cours, sans amélioration des agents.
+
+Les classes `Main2` et `Main3` permettent, respectivement, d'exécuter le scénario du cours avec la première amélioration et la seconde amélioration.
+
+Enfin, la classe `MassiveExecution` permet d’exécuter n'importe lequel des trois scénarios précédents, plusieurs fois. Dans cette classe, vous pouvez préciser le nombre de scénarios à lancer et quel scénario vous voulez lancer. Pour le type de scénario vous pouvez choisir entre les trois valeurs suivantes:
+
+- **1** : scénario de base
+- **2** : amélioration numéro 1
+- **3** : amélioration numéro 2
+
+```java
+    [...] 
+    public static final int nbScenario = 100;
+    public static final int scenario = 1;
+	[...] 
+```
+
+Après chaque exécution de scénario, vous pouvez retrouver l'intégralité des rapports des scénarios dans le dossier `doc/reports/`. Chaque rapport, écrit en Markdown, contient les informations de l'exécution d'un scénario, le nombre de mouvements réalisés, tous les états du scénario ainsi que la liste des actions réalisés par les agents, ordonné par type.
+
+Après plusieurs exécutions, vous pouvez **supprimer le dossier reports** pour nettoyer le projet de tous les rapports, le dossier sera recréé automatiquement après la première exécution. 
+
 ## Présentation du code
 
 
