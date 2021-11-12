@@ -42,43 +42,43 @@ Enfin, la classe `MassiveExecution` permet d’exécuter n'importe lequel des tr
 
 Après chaque exécution de scénario, vous pouvez retrouver l'intégralité des rapports des scénarios dans le dossier `doc/reports/`. Chaque rapport, écrit en Markdown, contient les informations de l'exécution d'un scénario, le nombre de mouvements réalisés, tous les états du scénario ainsi que la liste des actions réalisés par les agents, ordonné par type.
 
-Après plusieurs exécutions, vous pouvez **supprimer le dossier reports** pour nettoyer le projet de tous les rapports, le dossier sera recréé automatiquement après la première exécution. 
+Après plusieurs exécutions, vous pouvez **supprimer le dossier reports** pour nettoyer le projet de tous les rapports. Le dossier sera recréé automatiquement après la première exécution. 
 
 ## Présentation du code
 
-Pour le problème d'empilement de bloques ordonnés, nous somme partis sur l'implémentation suivante :
+Pour le problème d'empilement de blocs ordonnés, nous somme partis sur l'implémentation suivante :
 
 ![Untitled.vpd](img/Untitled.vpd-16367486299211.svg)
 
 ## Analyse des résultats
 
-À l'aide de notre implémentation, nous pouvons exécuter nos agents, dit agents tropiques, pour notre problème d'empilement ordonné de bloc. 
+À l'aide de notre implémentation, nous pouvons exécuter nos agents, dit agents tropiques, pour notre problème d'empilement ordonné de blocs. 
 
-Dans cette première implémentation, nos agents se contentent de se déplacer seulement s'ils n'ont pas atteint leur objectif ou si un bloque en dessous de eux, les poussent. Enfin, nos agents vérifient seulement si le bloque en dessous d'eux correspond à leur objectif.
+Dans cette première implémentation, nos agents se contentent de se déplacer, seulement s'ils n'ont pas atteint leur objectif ou si un bloc en dessous de eux les poussent. Enfin, nos agents vérifient que le bloc en dessous d'eux corresponde à leur objectif.
 
-Reprenons l'exemple du cours, où nous avons 4 agents (bloques) identifier avec les lettres A, B, C ou D pour seulement 3 piles. la configuration de départ se présente de la manière suivante, nos quatre agents sont empilés sur une seule pile, dans l'ordre B, D, A et C (de bas en haut) et doivent atteindre la configuration, A, B, C et D.
+Reprenons l'exemple du cours, où nous avons 4 agents (blocs) identifiés avec les lettres A, B, C ou D pour 3 piles. La configuration de départ se présente de la manière suivante : nos quatre agents sont empilés sur une seule pile, dans l'ordre B, D, A et C (de bas en haut) et doivent atteindre la configuration, A, B, C et D.
 
 <img src="img/exemple-cours.svg" alt="exemple-cours" style="zoom:150%;" />
 
-Dans la plus grande majorité des cas, nous arrivons à atteindre la situation voulue, par exemple, pour une exécution nous arrivons à l'objectif final avec **41** mouvements.
+Dans la plus grande majorité des cas, nous arrivons à atteindre la situation voulue. Par exemple, sur une exécution nous arrivons à l'objectif final avec **41** mouvements.
 
-Nous pouvons analyse la performance de nos agents pour cette première implémentation, on exécute 100 fois le scénario et on regarde les résultats qu'on obtient.
+Pour analyser la performance de nos agents avec cette première implémentation, nous exécutons 100 fois le scénario. Nous obtenons les résultats suivants :
 
 <img src="img/tableau-1.svg" alt="tableau-1" style="zoom:110%;  display: block;
 margin-left: auto;
 margin-right: auto;" />
 
-On remarque que sur nos **100** exécutions, on atteint la solution **97%** du temps, la moyenne des mouvements pour l'atteindre est de **43,93** et la médiane est de **38** mouvements. Nous pouvons aussi voir que lors d'une exécution, on a obtenu la solution en **8** mouvement, alors que le nombre de mouvements théoriques est de **7**.
+On remarque que sur nos **100** exécutions, on atteint la solution **97%** du temps. La moyenne des mouvements pour l'atteindre est de **43,93** et la médiane est de **38** mouvements. Nous pouvons aussi voir sur nos exécutions, la meilleure solution est en **8** mouvements, alors qu'il existe une solution en **7** mouvements.
 
 ## Amélioration et stratégies
 
-Nous pouvons, maintenant, améliorer le comportement de nos agents et proposer des stratégies de coordination pour rendre plus performant la planification.
+Nous pouvons maintenant améliorer le comportement de nos agents et proposer des stratégies de coordination pour les rendre plus performants.
 
 ### Stratégie 1
 
-Cette première stratégie consiste à améliorer la fonction d'évaluation de l'objectif de nos agents, au lieu de vérifier  si l'agent est sur le bloque voulus, l'agent va vérifier en plus, si tous les agents en dessous de lui ont atteint leur objectif pour considérer son objectif satisfait.
+Cette première stratégie consiste à améliorer la fonction d'évaluation de l'objectif de nos agents. Au lieu de vérifier si l'agent est sur le bloc voulus, l'agent va vérifier en plus, si tous les agents en dessous de lui ont atteint leur objectif pour considérer son objectif satisfait.
 
-Cette stratégie va nous permettre de voir si le simple fait d'améliorer la fonction d'évaluation de nos agents va améliorer l'organisation globale ou si nous devons rajouter d'autre comportement en plus.
+Cette stratégie va nous permettre de voir si le simple fait d'améliorer la fonction d'évaluation de nos agents va améliorer l'organisation globale ou si nous devons rajouter d'autre comportements en plus.
 
 <img src="img/tableau-2.svg" alt="tableau-2" style="zoom:110%;" />
 
@@ -88,13 +88,13 @@ Cette première amélioration semble nous donner de meilleurs résultats que l'i
 
 ### Stratégie 2
 
-Notre seconde stratégie est de faire réaliser à tous nos agents, que des déplacements utiles. C'est-à-dire, nos agents effectueront leurs déplacements seulement si celui-ci valide leur objectif. 
+Notre seconde stratégie consiste à ne faire réaliser à nos agents que des déplacements utiles. C'est-à-dire que nos agents effectueront leurs déplacements seulement si celui-ci valide leur objectif. 
 
-On ajoute à cette stratégie quelques règles supplémentaires pour éviter les situations autobloquantes:
+On ajoute à cette stratégie quelques règles supplémentaires pour éviter les situations auto-bloquantes:
 
 - Les agents doivent bouger s'ils sont poussés par un agent en dessous d'eux.
-- Les agents qui n'ont pas pour objectif le bas de la pile et qui se retrouve à même le sol, doivent bouger (cette règle évite d'entrer dans une situation bloquante où tous les agents se retrouvent à la base d'une pile et n'ont plus envie de bouger sauf un agent qui est le seul à vouloir être à la base de la pile et qui ne peut pas).
-- Les agents satisfaits, poussent les agents insatisfaits au-dessus d'eux (cette règle évite, lorsque la pile commence à se former correctement, de voir des agents se mettre à son sommet, insatisfait et la bloqué).
+- Les agents qui n'ont pas pour objectif le bas de la pile et qui se retrouvent à même le sol, doivent bouger. Cette règle évite d'entrer dans une situation bloquante où tous les agents se retrouvent à la base d'une pile et n'ont plus envie de bouger sauf un agent qui est le seul à vouloir être à la base de la pile et qui ne peut pas).
+- Les agents satisfaits, poussent les agents insatisfaits au-dessus d'eux (cette règle évite, lorsque la pile commence à se former correctement, de voir des agents se mettre à son sommet, insatisfaits et la bloquer.
 
 <img src="img/tableau-3.svg" alt="tableau-3" style="zoom:110%;" />
 
